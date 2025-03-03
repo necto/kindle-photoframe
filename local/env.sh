@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
+# FIXME: seems to be unused
 
 # Export environment variables here
 export WIFI_TEST_IP=${WIFI_TEST_IP:-1.1.1.1}

@@ -10,7 +10,8 @@ LOW_BATTERY_CMD="$DIR/local/low-battery.sh"
 REFRESH_SCHEDULE=${REFRESH_SCHEDULE:-"2,32 8-17 * * MON-FRI"}
 FULL_DISPLAY_REFRESH_RATE=${FULL_DISPLAY_REFRESH_RATE:-0}
 SLEEP_SCREEN_INTERVAL=${SLEEP_SCREEN_INTERVAL:-3600}
-RTC=/sys/devices/platform/mxc_rtc.0/wakeup_enable
+RTC_WAKE=/sys/class/rtc/rtc0/wakealarm
+RTC_TIME=/sys/class/rtc/rtc0/since_epoch
 
 LOW_BATTERY_REPORTING=${LOW_BATTERY_REPORTING:-false}
 LOW_BATTERY_THRESHOLD_PERCENT=${LOW_BATTERY_THRESHOLD_PERCENT:-10}
@@ -27,7 +28,7 @@ init() {
 
   echo "Starting dashboard with $REFRESH_SCHEDULE refresh..."
 
-  /etc/init.d/framework stop
+  /etc/init/framework stop
   initctl stop webreader >/dev/null 2>&1
   echo powersave >/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
   lipc-set-prop com.lab126.powerd preventScreenSaver 1
@@ -90,7 +91,7 @@ rtc_sleep() {
     sleep "$duration"
   else
     # shellcheck disable=SC2039
-    [ "$(cat "$RTC")" -eq 0 ] && echo -n "$duration" >"$RTC"
+    [ -z $(cat "$RTC_WAKE") ] && echo $(($(cat "$RTC_TIME") + 20)) > "$RTC_WAKE"
     echo "mem" >/sys/power/state
   fi
 }

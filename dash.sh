@@ -30,7 +30,16 @@ init() {
 
   echo "Starting dashboard with $REFRESH_SCHEDULE refresh..."
 
-  /etc/init/framework stop
+  # This does nothing on PW3 (kindle paper white 3) if DEBUG is set,
+  # and it hangs if DEBUG is not set.
+  # Alternative command could be "stop framework", which disables most of the UI,
+  # but it is not useful either:
+  # - it does not disable the clock, wifi, and battery indicators which pierce through pictures
+  # - the rest of the UI does not interefere anyway
+  # - it starts "crash report" dialog
+  # - I don't know how to revive kindle after that without restarting (start framework is not enough)
+  # So commenting out:
+  # /etc/init/framework stop
   initctl stop webreader >/dev/null 2>&1
   echo powersave >/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
   lipc-set-prop com.lab126.powerd preventScreenSaver 1

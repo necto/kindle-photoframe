@@ -1,5 +1,4 @@
 #!/usr/bin/env sh
-# FIXME: seems to be unused
 
 # Export environment variables here
 export WIFI_TEST_IP=${WIFI_TEST_IP:-1.1.1.1}
@@ -17,7 +16,7 @@ export FULL_DISPLAY_REFRESH_RATE=${FULL_DISPLAY_REFRESH_RATE:-4}
 # the dashboard will not be refreshed anymore, but instead show a
 # 'kindle is sleeping' screen. This can be useful if your schedule only runs
 # during the day, for example.
-export SLEEP_SCREEN_INTERVAL=3600
+export SLEEP_SCREEN_INTERVAL=100000000 # kindle never sleeps
 
 export LOW_BATTERY_REPORTING=${LOW_BATTERY_REPORTING:-false}
 export LOW_BATTERY_THRESHOLD_PERCENT=10

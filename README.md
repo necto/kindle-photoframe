@@ -7,7 +7,7 @@ Make the adjustments in the local dir: schedule, ip of the image server, ...
 This folder should be dropped into the /mnt/us/ like this:
 
 ``` sh
-scp -r kindle-dash root@your-kindle-ip:/mnt/us/
+scp -r . root@your-kindle-ip:/mnt/us/kindle-dash
 ```
 
 Then you can activate kindle-dash ssh-ing into your kindle and running:

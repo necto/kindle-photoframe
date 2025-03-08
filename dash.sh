@@ -102,7 +102,7 @@ rtc_sleep() {
     sleep "$duration"
   else
     # shellcheck disable=SC2039
-    [ -z $(cat "$RTC_WAKE") ] && echo $(($(cat "$RTC_TIME") + 20)) > "$RTC_WAKE"
+    [ -z "$(cat "$RTC_WAKE")" ] && echo $(($(cat "$RTC_TIME") + 20)) >"$RTC_WAKE"
     echo "mem" >/sys/power/state
   fi
 }

@@ -45,7 +45,9 @@ init() {
   lipc-set-prop com.lab126.powerd preventScreenSaver 1
 
   # Disable frontlight completely
-  lipc-set-prop com.lab126.powerd flIntensity 0
+  # This sets it to minimum but not 0: `lipc-set-prop com.lab126.powerd flIntensity 0`
+  # This disables it completely:
+  echo -n 0 >/sys/class/backlight/max77696-bl/brightness
 }
 
 prepare_sleep() {

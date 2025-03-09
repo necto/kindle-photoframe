@@ -109,9 +109,13 @@ rtc_sleep() {
 
 main_loop() {
   while true; do
-    log_battery_stats
 
     next_wakeup_secs=$("$DIR/next-wakeup" --schedule="$REFRESH_SCHEDULE" --timezone="$TIMEZONE")
+
+    # take a bit of time before going to sleep, so this process can be aborted
+    # Doing this before the refresh to minimize the chance of some UI update breaking through the picture
+    # as it happens with the clock, wifi, and battery indicators
+    sleep 10
 
     if [ "$next_wakeup_secs" -gt "$SLEEP_SCREEN_INTERVAL" ]; then
       action="sleep"
@@ -120,9 +124,8 @@ main_loop() {
       action="suspend"
       refresh_dashboard
     fi
-
-    # take a bit of time before going to sleep, so this process can be aborted
-    sleep 10
+    # Invoke after the refresh, to show battery level on top of the picture
+    log_battery_stats
 
     echo "Going to $action, next wakeup in ${next_wakeup_secs}s"
 

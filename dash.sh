@@ -66,6 +66,7 @@ refresh_dashboard() {
 
   if [ "$fetch_status" -ne 0 ]; then
     echo "Not updating screen, fetch-dashboard returned $fetch_status"
+    fbink -pmh -y 0 "Fetch failed: $fetch_status"
     return 1
   fi
 

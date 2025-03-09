@@ -43,6 +43,9 @@ init() {
   initctl stop webreader >/dev/null 2>&1
   echo powersave >/sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
   lipc-set-prop com.lab126.powerd preventScreenSaver 1
+
+  # Disable frontlight completely
+  lipc-set-prop com.lab126.powerd flIntensity 0
 }
 
 prepare_sleep() {
